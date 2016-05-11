@@ -2,133 +2,67 @@
 <html>
 
 <head>
-
   <link type="text/css" rel="stylesheet" href="css/bootstrap.css" />
   <style>
-    .container {
-      background-color: lightgray;
-      margin-top: 30px;
-      padding-bottom: 30px;
-    }
-    
-    .subscription {
-      background-color: #373737;
-    }
-    
-    .btn-primary {
-      margin-top: 8px;
-      margin-right: 10px;
-    }
-    
-    .btn-default {
-      margin-top: 8px;
-      margin-right: 10px;
-    }
-    
     .jumbotron {
-      margin-top: 30px;
-      margin-bottom: 30px;
-      margin-left: 100px;
-      margin-right: 100px;
-    }
-    
-    .user_input {
-      margin-left: 40px;
+      font-family: Calibri;
+      font-size: 12px;
     }
   </style>
-  <title>LeetCode OJ</title>
-</head>
 
-<body>
-
-  <nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <a class="navbar-brand" href="#">LeetCode OJ</a>
-      </div>
-      <ul class="nav navbar-nav">
-        <li class="subscription"><a href="#"><font color="orange">LeetCode Premium Subscription</font></a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Problems<span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Problem 1</a></li>
-            <li><a href="#">Problem 2</a></li>
-          </ul>
-          <li><a href="#">Pick One</a></li>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Mock<span class="caret"></span></a>
-            <ul class="dropdown-menu">
-              <li><a href="#">Mock Interview</a></li>
-              <li><a href="#">Past Sessions</a></li>
+  <body>
+    <div class="jumbotron">
+      <div class="row">
+        <div class="col-md-3">
+          <ul>
+            <h1>Easy 6502</h1>
+            <p><em>by</em> <a href="https://twitter.com/skilldrick">Nick Morgan</a></p>
+            <p class="view"><a href="https://github.com/skilldrick/easy6502/tree/gh-pages">Fork me on GitHub</a></p>
+            <ul>
+              <li><a href="#intro">Introduction</a></li>
+              <li><a href="#first-program">Our first program</a></li>
+              <li><a href="#registers">Registers and flags</a></li>
+              <li><a href="#instructions">Instructions</a></li>
+              <li><a href="#branching">Branching</a></li>
+              <li><a href="#addressing">Addressing modes</a></li>
+              <li><a href="#stack">The stack</a></li>
+              <li><a href="#jumping">Jumping</a></li>
+              <li><a href="#snake">Creating a game</a></li>
             </ul>
-            <li><a href="#">Articles</a></li>
-            <li><a href="#">Discuss</a></li>
-            <li>
-              <a href="#"><font color="orange">Book</font>
-              </a>
-            </li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li>
-          <button type="button" class="btn btn-primary">Sign Up</button>
-        </li>
-        <li>
-          <button type="button" class="btn btn-default">Sign In</button>
-        </li>
-      </ul>
-    </div>
-  </nav>
+        </div>
 
-  <div class="jumbotron">
-    <ul>
-      <strong><h2>LeetCode Online Judge</h2></strong>
-      <p>We are supporting <font color="red">JavaScript</font> and <font color="red">Ruby</font> now!</p>
+        <div class="col-md-6">
+          <h2 id="intro">Introduction</h2>
+          <p>In this tiny ebook I&rsquo;m going to show you how to get started writing 6502 assembly language. The 6502 processor was massive in the seventies and eighties, powering famous computers like the
+            <a href="http://en.wikipedia.org/wiki/BBC_Micro">BBC Micro</a>,
+            <a href="http://en.wikipedia.org/wiki/Atari_2600">Atari 2600</a>,
+            <a href="http://en.wikipedia.org/wiki/Commodore_64">Commodore 64</a>,
+            <a href="http://en.wikipedia.org/wiki/Apple_II">Apple II</a>, and the <a href="http://en.wikipedia.org/wiki/Nintendo_Entertainment_System">Nintendo Entertainment
+              System</a>. Bender in Futurama <a href="http://www.transbyte.org/SID/SID-files/Bender_6502.jpg">has a 6502 processor for a
+              brain</a>. <a href="http://www.pagetable.com/docs/terminator/00-37-23.jpg">Even the
+              Terminator was programmed in
+              6502</a>.</p>
 
-      <p>LeetCode OJ is a platform for preparing technical coding interviews. Pick from an expanding library of more than <em>190</em> questions, code and submit your solution to see if you have solved it correctly! It is <em>that</em> easy!</p>
+          <p>So, why would you want to learn 6502? It&rsquo;s a dead language isn&rsquo;t it? Well, so&rsquo;s Latin. And they still teach that.
+            <a href="http://en.wikipedia.org/wiki/Q.E.D.">Q.E.D.</a></p>
 
-      <p>Our platform currently supports a total of 9 languages: C, C++, Java, Python, C#, JavaScript, Ruby, Bash, MySQL.</p>
+          <p>(Actually, I&rsquo;ve been reliably informed that 6502 processors are still being produced by <a href="http://www.westerndesigncenter.com/wdc/w65c02s-chip.cfm">Western Design Center</a> and <a href="http://www.mouser.co.uk/Search/Refine.aspx?Keyword=65C02">sold to hobbyists</a>,
+            so clearly 6502
+            <em>isn&rsquo;t</em> a dead language! Who knew?)</p>
 
-      <p><a href="http://google.com">Follow</a> or <a href="http://google.com">Like LeetCode</a> and get the <font color="red">latest update</font> when a new question is added!</p>
+          <p>Seriously though, I think it&rsquo;s valuable to have an understanding of assembly language. Assembly language is the lowest level of abstraction in computers - the point at which the code is still readable. Assembly language translates directly
+            to the bytes that are executed by your computer&rsquo;s processor. If you understand how it works, you&rsquo;ve basically become a computer
+            <a href="http://skilldrick.co.uk/2011/04/magic-in-software-development/">magician</a>.</p>
 
-      <ul>
-        <li><img src="images/facebook-like-icon.png"><a href="http://facebook.com"> Facebook</img></a></li>
-        <li><img src="images/twitter-follow-icon.png"><a href="http://twitter.com"> Twitter</img></a></li>
-        <li><img src="images/weibo.png"><a href="http://weibo.com"> Weibo</img></a></li>
-      </ul>
-    </ul>
-
-    <ul>
-      <p><a href="http://http://practiceit.cs.washington.edu/.com">Code.</a> <a href="https://www.yahoo.com">Read.</a> <a href="https://slack.com">Discuss.</a></p>
-    </ul>
-
-    <div class="user_input">
-      <div class="list-inline">
-        <li>
-          <input type="text" class="form-control" id="usr" placeholder="Username">
-        </li>
-
-        <li>
-          <input type="text" class="form-control" id="usr" placeholder="E-mail Address">
-        </li>
-
-        <li>
-          <input type="text" class="form-control" id="usr" placeholder="Password">
-        </li>
-
-        <li>
-          <button type="button" class="btn btn-primary">Sign up for LeetCode OJ</button>
-        </li>
-
+          <p>Then why 6502? Why not a <em>useful</em> assembly language, like
+            <a href="http://en.wikipedia.org/wiki/X86">x86</a>? Well, I don&rsquo;t think learning x86 is useful. I don&rsquo;t think you&rsquo;ll ever have to <em>write</em> assembly language in your day job - this is purely an academic exercise, something
+            to expand your mind and your thinking. 6502 was originally written in a different age, a time when the majority of developers were writing assembly directly, rather than in these new-fangled high-level programming languages. So, it was designed
+            to be written by humans. More modern assembly languages are meant to written by compilers, so let&rsquo;s leave it to them. Plus, 6502 is <em>fun</em>. Nobody ever called x86 <em>fun</em>.</p>
+          </ul>
+        </div>
       </div>
     </div>
-  </div>
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <script>
-    window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')
-  </script>
-  <script src="../../dist/js/bootstrap.min.js"></script>
-  <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
-</body>
+  </body>
+</head>
 
 </html>
